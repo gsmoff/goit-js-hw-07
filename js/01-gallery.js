@@ -36,22 +36,19 @@ function onGalleryCardsClick(evt) {
     
     const instance = basicLightbox.create(`
     <img src="${evt.target.dataset.source}">
-    `)
-    instance.show()
+    `,
+        {
+    onShow: () => { document.addEventListener("keydown", onPushEsc); },
+    onClose: () => { document.removeEventListener("keydown", onPushEsc); },
+    }
+    );
 
-    document.addEventListener("keydown", (evt) => {
+    function onPushEsc(evt) {
         if (evt.code === "Escape") {
             instance.close()
         }
-    });
-
+    }
+    instance.show()
     console.log(evt.target.alt);
 }
 galleryContainer.addEventListener('click', onGalleryCardsClick);
-
-function isCardSwatch(location) {
-    
-}
-
-
-
